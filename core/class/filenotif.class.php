@@ -36,10 +36,12 @@ class filenotif extends eqLogic {
 
       if ($oldMD5 != $newMD5) {
         log::add('filenotif', 'debug', '=> New files detected');
+        $this->checkAndUpdateCmd('flag_newfile', 1);
+        sleep(10);
+        $this->checkAndUpdateCmd('flag_newfile', 0);
       }else {
         log::add('filenotif', 'debug', '=> No change');
       }
-
     }
 
   /*
