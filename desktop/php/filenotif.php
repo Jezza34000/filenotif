@@ -132,17 +132,9 @@ $eqLogics = eqLogic::byType($plugin->getId());
 									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="foldertocheck" placeholder="{{/var/www/html/plugins/camera/data/records}}"/>
 								</div>
 							</div>
-							<!--<div class="form-group">
-								<label class="col-sm-3 control-label"> {{Mot de passe}}
-									<sup><i class="fas fa-question-circle tooltips" title="{{Renseignez le mot de passe}}"></i></sup>
-								</label>
-								<div class="col-sm-7">
-									<input type="text" class="eqLogicAttr form-control inputPassword" data-l1key="configuration" data-l2key="password"/>
-								</div>
-							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Auto-actualisation}}
-									<sup><i class="fas fa-question-circle tooltips" title="{{Fréquence de rafraîchissement de l'équipement}}"></i></sup>
+									<sup><i class="fas fa-question-circle tooltips" title="{{Fréquence de vérification du répertoire}}"></i></sup>
 								</label>
 								<div class="col-sm-7">
 									<div class="input-group">
@@ -154,7 +146,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 										</span>
 									</div>
 								</div>
-							</div> -->
+							</div>
 						</div>
 
 						<!-- Partie droite de l'onglet "Équipement" -->
