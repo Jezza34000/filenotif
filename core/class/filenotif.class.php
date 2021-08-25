@@ -84,6 +84,34 @@ class filenotif extends eqLogic {
  // Fonction exécutée automatiquement après la création de l'équipement
     public function postInsert() {
 
+      $webackcmd = new filenotif();
+      $webackcmd->setName(__('Rafraichir', __FILE__));
+      $webackcmd->setEqLogic_id($this->id);
+      $webackcmd->setType('action');
+      $webackcmd->setSubType('other');
+      $webackcmd->setLogicalId('refresh');
+      $webackcmd->setOrder(1);
+      $webackcmd->save();
+
+      $webackcmd = new filenotif();
+      $webackcmd->setName(__('Nouveau fichier détecté', __FILE__));
+      $webackcmd->setEqLogic_id($this->id);
+      $webackcmd->setType('info');
+      $webackcmd->setSubType('binary');
+      $webackcmd->setIsHistorized(0);
+      $webackcmd->setLogicalId('flag_newfile');
+      $webackcmd->setOrder(2);
+      $webackcmd->save();
+
+      $webackcmd = new filenotif();
+      $webackcmd->setName(__('Detail fichier', __FILE__));
+      $webackcmd->setEqLogic_id($this->id);
+      $webackcmd->setType('info');
+      $webackcmd->setSubType('string');
+      $webackcmd->setIsHistorized(0);
+      $webackcmd->setLogicalId('file_detail');
+      $webackcmd->setOrder(3);
+      $webackcmd->save();
     }
 
  // Fonction exécutée automatiquement avant la mise à jour de l'équipement
