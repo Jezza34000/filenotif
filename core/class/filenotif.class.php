@@ -224,7 +224,8 @@ class filenotifCmd extends cmd {
 
   // Exécution d'une commande
      public function execute($_options = array()) {
-
+       $eqLogic = $this->getEqlogic();
+       $eqLogic->checkNewFile($result);
      }
 
     /*     * **********************Getteur Setteur*************************** */
