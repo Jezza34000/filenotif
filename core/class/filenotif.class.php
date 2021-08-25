@@ -27,7 +27,9 @@ class filenotif extends eqLogic {
       if ($folder != '') {
           log::add('filenotif', 'debug', 'Lecture de : '.$folder);
           $listedfiles = scandir($folder);
-          log::add('filenotif', 'debug', 'Nbs de fichiers : '.print_r($listedfiles, true));
+          $filesMD5 = md5(print_r($listedfiles, true));
+          log::add('filenotif', 'debug', 'MD5 : '.$filesMD5);
+          $this->setConfiguration('FolderMD5',$filesMD5);
           return $listedfiles;
       }
     }
