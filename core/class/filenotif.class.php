@@ -62,15 +62,20 @@ class filenotif extends eqLogic {
      // Fonction exécutée automatiquement toutes les 5 minutes par Jeedom
       public static function cron() {
         $eqLogics = ($_eqlogic_id !== null) ? array(eqLogic::byId($_eqlogic_id)) : eqLogic::byType('filenotif', true);
-        if (count($eqLogics) > 0) {
-          log::add('filenotif', 'debug', 'Refresh (CRON) => Démarré pour vérifier : '.count($eqLogics).' répertoire(s)');
-          foreach ($eqLogics as $filenotifobj) {
-            log::add('filenotif', 'debug', 'Execution du process de vérification pour : '.$filenotifobj->getHumanName());
-            $return = $filenotifobj->checkNewFile();
-          }
-        } else {
-          log::add('filenotif', 'debug', 'Refresh (CRON) => Aucun répertoires à vérifier.');
-        }
+    		foreach ($eqLogics as $filenotif) {
+    			$autorefresh = $filenotif->getConfiguration('autorefresh','*/5 * * * *');
+    			if ($autorefresh != '') {
+    				try {
+    					$c = new Cron\CronExpression(checkAndFixCron($autorefresh), new Cron\FieldFactory);
+    					if ($c->isDue()) {
+                log::add('filenotif', 'debug', 'Execution du process de vérification pour : '.$filenotif->getHumanName());
+    						$filenotif->checkNewFile();
+    					}
+    				} catch (Exception $exc) {
+    					log::add('filenotif', 'error', __('Expression cron non valide pour ', __FILE__) . $filenotif->getHumanName() . ' : ' . $autorefresh);
+    				}
+    			}
+    		}
       }
 
 

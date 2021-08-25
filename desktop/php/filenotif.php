@@ -123,7 +123,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								</div>
 							</div>
 
-							<legend><i class="fas fa-cogs"></i> {{Paramètres de surveillances}}</legend>
+							<legend><i class="fas fa-cogs"></i> {{Paramètres}}</legend>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Répertoire à surveiller}}
 									<sup><i class="fas fa-question-circle tooltips" title="{{Entrez ici le chemin du répertoire à surveiller}}"></i></sup>
