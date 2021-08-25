@@ -27,7 +27,7 @@ class filenotif extends eqLogic {
       if ($folder != '') {
           log::add('filenotif', 'debug', 'Lecture de : '.$folder);
           $listedfiles = scandir($folder);
-          log::add('filenotif', 'debug', 'Nbs de fichiers : '.count($listedfiles);
+          log::add('filenotif', 'debug', 'Nbs de fichiers : '.print_r($listedfiles);
           return $listedfiles;
       }
     }
