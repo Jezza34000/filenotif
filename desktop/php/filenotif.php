@@ -123,13 +123,27 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								</div>
 							</div>
 
-							<legend><i class="fas fa-cogs"></i> {{Paramètres}}</legend>
+							<legend><i class="fas fa-cogs"></i> {{Paramètres de surveillance}}</legend>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">{{Répertoire à surveiller}}
+								<label class="col-sm-3 control-label">{{Répertoire}}
 									<sup><i class="fas fa-question-circle tooltips" title="{{Entrez ici le chemin du répertoire à surveiller}}"></i></sup>
 								</label>
 								<div class="col-sm-7">
 									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="foldertocheck" placeholder="{{/var/www/html/plugins/camera/data/records}}"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">{{Extension}}
+									<sup><i class="fas fa-question-circle tooltips" title="{{Spécifiez les extensions à surveiller : * pour toutes, ou extension(s) séparer par virgule}}"></i></sup>
+								</label>
+								<div class="col-sm-7">
+									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="foldertocheck" placeholder="{{jpg,png,gif}}"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">{{Vérifier les sous-répertoire}}</label>
+								<div class="col-sm-3">
+									<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="checksubdirectory"/>
 								</div>
 							</div>
 							<div class="form-group">

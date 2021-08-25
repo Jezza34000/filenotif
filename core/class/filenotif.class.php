@@ -141,12 +141,12 @@ class filenotif extends eqLogic {
       $filenotifCmd->save();
 
       $filenotifCmd = new filenotifCmd();
-      $filenotifCmd->setName(__('Detail fichier', __FILE__));
+      $filenotifCmd->setName(__('Quantité nouveau fichier', __FILE__));
       $filenotifCmd->setEqLogic_id($this->id);
       $filenotifCmd->setType('info');
-      $filenotifCmd->setSubType('string');
+      $filenotifCmd->setSubType('numeric');
       $filenotifCmd->setIsHistorized(0);
-      $filenotifCmd->setLogicalId('file_detail');
+      $filenotifCmd->setLogicalId('file_quantity');
       $filenotifCmd->setOrder(3);
       $filenotifCmd->save();
     }
