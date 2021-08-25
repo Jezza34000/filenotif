@@ -22,7 +22,7 @@ require_once __DIR__  . '/../../../../core/php/core.inc.php';
 class filenotif extends eqLogic {
     /*     * *************************Attributs****************************** */
 
-    public static function checkNewFile($calledID){
+    public function checkNewFile(){
       if ($this->getConfiguration('foldertocheck') != '') {
           log::add('filenotif', 'debug', 'Lecture de : '.$this->getConfiguration('foldertocheck'));
           return true;
@@ -45,13 +45,13 @@ class filenotif extends eqLogic {
 
 
      // Fonction exécutée automatiquement toutes les 5 minutes par Jeedom
-      public static function cron5() {
+      public static function cron() {
         $eqLogics = ($_eqlogic_id !== null) ? array(eqLogic::byId($_eqlogic_id)) : eqLogic::byType('filenotif', true);
         if (count($eqLogics) > 0) {
           log::add('filenotif', 'debug', 'Refresh (CRON) => Démarré pour vérifier : '.count($eqLogics).' répertoire(s)');
           foreach ($eqLogics as $filenotifobj) {
             log::add('filenotif', 'debug', 'Execution du process de vérification pour : '.$filenotifobj->getHumanName());
-            filenotif::checkNewFile($filenotifobj->getId());
+            $return = $eqLogics->checkNewFile();
           }
         } else {
           log::add('filenotif', 'debug', 'Refresh (CRON) => Aucun répertoires à vérifier.');
