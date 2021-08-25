@@ -137,7 +137,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 									<sup><i class="fas fa-question-circle tooltips" title="{{Spécifiez les extensions à surveiller : * pour toutes, ou extension(s) séparer par virgule}}"></i></sup>
 								</label>
 								<div class="col-sm-7">
-									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="foldertocheck" placeholder="{{jpg,png,gif}}"/>
+									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="extensiontocheck" placeholder="{{mp4,avi,mov,jpg,png,gif}}"/>
 								</div>
 							</div>
 							<div class="form-group">
