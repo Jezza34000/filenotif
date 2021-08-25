@@ -22,6 +22,13 @@ require_once __DIR__  . '/../../../../core/php/core.inc.php';
 class filenotif extends eqLogic {
     /*     * *************************Attributs****************************** */
 
+    public static function checkNewFile($calledID){
+      if ($this->getConfiguration('foldertocheck') != '') {
+          log::add('filenotif', 'debug', 'Lecture de : '.$this->getConfiguration('foldertocheck'));
+          return true;
+      }
+    }
+
   /*
    * Permet de définir les possibilités de personnalisation du widget (en cas d'utilisation de la fonction 'toHtml' par exemple)
    * Tableau multidimensionnel - exemple: array('custom' => true, 'custom::layout' => false)
@@ -36,11 +43,21 @@ class filenotif extends eqLogic {
       }
      */
 
-    /*
-     * Fonction exécutée automatiquement toutes les 5 minutes par Jeedom
+
+     // Fonction exécutée automatiquement toutes les 5 minutes par Jeedom
       public static function cron5() {
+        $eqLogics = ($_eqlogic_id !== null) ? array(eqLogic::byId($_eqlogic_id)) : eqLogic::byType('filenotif', true);
+        if (count($eqLogics) > 0) {
+          log::add('filenotif', 'debug', 'Refresh (CRON) => Démarré pour vérifier : '.count($eqLogics).' répertoire(s)');
+          foreach ($eqLogics as $filenotifobj) {
+            log::add('filenotif', 'debug', 'Execution du process de vérification pour : '.$filenotifobj->getHumanName());
+            filenotif::checkNewFile($filenotifobj->getId());
+          }
+        } else {
+          log::add('filenotif', 'debug', 'Refresh (CRON) => Aucun répertoires à vérifier.');
+        }
       }
-     */
+
 
     /*
      * Fonction exécutée automatiquement toutes les 10 minutes par Jeedom

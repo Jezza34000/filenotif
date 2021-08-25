@@ -129,7 +129,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 									<sup><i class="fas fa-question-circle tooltips" title="{{Entrez ici le chemin du répertoire à surveiller}}"></i></sup>
 								</label>
 								<div class="col-sm-7">
-									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="param1" placeholder="{{/var/www/html/plugins/camera/data/records}}"/>
+									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="foldertocheck" placeholder="{{/var/www/html/plugins/camera/data/records}}"/>
 								</div>
 							</div>
 							<!--<div class="form-group">
