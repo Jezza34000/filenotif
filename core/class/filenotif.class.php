@@ -24,14 +24,22 @@ class filenotif extends eqLogic {
 
     public function checkNewFile() {
       $folder = $this->getConfiguration('foldertocheck');
+      $oldMD5 = $this->getConfiguration('FolderMD5');
       if ($folder != '') {
           log::add('filenotif', 'debug', 'Lecture de : '.$folder);
           $listedfiles = scandir($folder);
-          $filesMD5 = md5(print_r($listedfiles, true));
-          log::add('filenotif', 'debug', 'MD5 : '.$filesMD5);
-          $this->setConfiguration('FolderMD5',$filesMD5);
-          return $listedfiles;
+          $newMD5 = md5(print_r($listedfiles, true));
+          log::add('filenotif', 'debug', 'new MD5 : '.$newMD5);
+          $this->setConfiguration('FolderMD5',$newMD5);
+          $this->save();
       }
+
+      if ($oldMD5 != $newMD5) {
+        log::add('filenotif', 'debug', '=> New files detected');
+      }else {
+        log::add('filenotif', 'debug', '=> No change');
+      }
+
     }
 
   /*
