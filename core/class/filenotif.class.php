@@ -23,9 +23,12 @@ class filenotif extends eqLogic {
     /*     * *************************Attributs****************************** */
 
     public function checkNewFile() {
-      if ($this->getConfiguration('foldertocheck') != '') {
-          log::add('filenotif', 'debug', 'Lecture de : '.$this->getConfiguration('foldertocheck'));
-          return $result;
+      $folder = $this->getConfiguration('foldertocheck');
+      if ($folder != '') {
+          log::add('filenotif', 'debug', 'Lecture de : '.$folder);
+          $listedfiles = scandir($folder);
+          var_dump($listedfiles);
+          return $listedfiles;
       }
     }
 
