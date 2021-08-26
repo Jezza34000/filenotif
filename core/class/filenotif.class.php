@@ -77,7 +77,7 @@ class filenotif extends eqLogic {
           if ($deltaCount < 0 AND $this->getConfiguration('notifydel') == 0) {
             // NO Notif
           } else {
-            $this->checkAndUpdateCmd('info_filecount', (int)$deltaCount);
+            $this->checkAndUpdateCmd('info_filecount', $deltaCount);
             $this->setConfiguration('FilesCount', $newCount);
             $this->save();
             $this->checkAndUpdateCmd('flag_newfile', 1);
@@ -189,7 +189,7 @@ class filenotif extends eqLogic {
       $filenotifCmd->setName(__('Quantité fichier', __FILE__));
       $filenotifCmd->setEqLogic_id($this->id);
       $filenotifCmd->setType('info');
-      $filenotifCmd->setSubType('numeric');
+      $filenotifCmd->setSubType('string');
       $filenotifCmd->setIsHistorized(0);
       $filenotifCmd->setLogicalId('info_filecount');
       $filenotifCmd->setOrder(3);
