@@ -44,6 +44,38 @@ class filenotif extends eqLogic {
       }
     }
 
+    public function checkNewFile2() {
+      $folder = $this->getConfiguration('foldertocheck');
+      $oldMD5 = $this->getConfiguration('FolderMD5');
+      if ($folder != '') {
+          log::add('filenotif', 'debug', 'Lecture de : '.$folder);
+          $listedfiles = rglob($folder . '/*');
+          $newMD5 = md5(print_r($listedfiles, true));
+          log::add('filenotif', 'debug', 'Glob return : '.print_r($listedfiles, true));
+          $this->setConfiguration('FolderMD5',$newMD5);
+          $this->save();
+      }
+
+      if ($oldMD5 != $newMD5) {
+        log::add('filenotif', 'debug', '=> New files detected');
+        $this->checkAndUpdateCmd('flag_newfile', 1);
+        sleep(10);
+        $this->checkAndUpdateCmd('flag_newfile', 0);
+      }else {
+        log::add('filenotif', 'debug', '=> No change');
+      }
+    }
+
+
+    public function rglob($pattern, $flags = 0) {
+        $files = glob($pattern, $flags);
+        foreach (glob(dirname($pattern).'/*', GLOB_ONLYDIR|GLOB_NOSORT) as $dir) {
+            $files = array_merge($files, rglob($dir.'/'.basename($pattern), $flags));
+        }
+        return $files;
+    }
+
+
   /*
    * Permet de définir les possibilités de personnalisation du widget (en cas d'utilisation de la fonction 'toHtml' par exemple)
    * Tableau multidimensionnel - exemple: array('custom' => true, 'custom::layout' => false)
@@ -69,7 +101,7 @@ class filenotif extends eqLogic {
     					$c = new Cron\CronExpression(checkAndFixCron($autorefresh), new Cron\FieldFactory);
     					if ($c->isDue()) {
                 log::add('filenotif', 'debug', 'Execution du process de vérification pour : '.$filenotif->getHumanName());
-    						$filenotif->checkNewFile();
+    						$filenotif->checkNewFile2();
     					}
     				} catch (Exception $exc) {
     					log::add('filenotif', 'error', __('Expression cron non valide pour ', __FILE__) . $filenotif->getHumanName() . ' : ' . $autorefresh);
