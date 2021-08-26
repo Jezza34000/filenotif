@@ -141,6 +141,18 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								</div>
 							</div>
 							<div class="form-group">
+									<label class="col-sm-3 control-label">{{Notification déclenché par}}</label>
+									<div class="col-sm-3">
+											<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notifmode">
+													<option value="newfile">{{Nouveaux fichiers}}</option>
+													<option value="delfile">{{Fichiers supprimés}}</option>
+													<option value="bothfile">{{Les deux}}</option>
+											</select>
+									</div>
+							</div>
+
+
+							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Notifier les suppressions}}</label>
 								<div class="col-sm-3">
 									<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="notifydel"/>

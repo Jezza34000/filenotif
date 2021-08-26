@@ -1,6 +1,6 @@
 {
 	"id" : "filenotif",
-	"name" : "New files notification11111",
+	"name" : "New files notification",
 	"description" : {
 		"fr_FR": "Pour surveiller un répertoire et vous avertir en cas de nouveau fichier. Utile pour vous avertir lorsque vos caméras enregistre un nouvel evènement et/ou une application tierce crée un nouveau log."
 	},

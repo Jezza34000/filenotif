@@ -22,29 +22,7 @@ require_once __DIR__  . '/../../../../core/php/core.inc.php';
 class filenotif extends eqLogic {
     /*     * *************************Attributs****************************** */
 
-    public function checkNewFile() {
-      $folder = $this->getConfiguration('foldertocheck');
-      $oldMD5 = $this->getConfiguration('FolderMD5');
-      if ($folder != '') {
-          log::add('filenotif', 'debug', 'Lecture de : '.$folder);
-          $listedfiles = scandir($folder);
-          $newMD5 = md5(print_r($listedfiles, true));
-          log::add('filenotif', 'debug', 'new MD5 : '.$newMD5);
-          $this->setConfiguration('FolderMD5',$newMD5);
-          $this->save();
-      }
-
-      if ($oldMD5 != $newMD5) {
-        log::add('filenotif', 'debug', '=> New files detected');
-        $this->checkAndUpdateCmd('flag_newfile', 1);
-        sleep(10);
-        $this->checkAndUpdateCmd('flag_newfile', 0);
-      }else {
-        log::add('filenotif', 'debug', '=> No change');
-      }
-    }
-
-    public function checkNewFile2() {
+    public function checkfile() {
       $folder = $this->getConfiguration('foldertocheck');
 
       if (substr($folder, -1) != "/") {
@@ -70,23 +48,33 @@ class filenotif extends eqLogic {
       log::add('filenotif', 'debug', 'MD5(new)= '.$newMD5);
       log::add('filenotif', 'debug', 'MD5(old)= '.$oldMD5);
       if ($oldMD5 != $newMD5) {
-        log::add('filenotif', 'debug', '=> Changement détecté !');
-        $oldCount = $this->getConfiguration('FilesCount', 0);
-        $deltaCount = $newCount - $oldCount;
-        log::add('filenotif', 'debug', 'Comptage Delta='.$deltaCount.' OLD='.$oldCount." NEW=".$newCount);
-          if ($deltaCount < 0 AND $this->getConfiguration('notifydel') == 0) {
-            // NO Notif
+          log::add('filenotif', 'debug', '=> Changement détecté !');
+          $oldCount = $this->getConfiguration('FilesCount', 0);
+          $deltaCount = $newCount - $oldCount;
+          $this->setConfiguration('FilesCount', $newCount);
+          $this->save();
+          $this->checkAndUpdateCmd('info_filecount', $deltaCount);
+          log::add('filenotif', 'debug', 'Comptage | Delta='.$deltaCount.' OLD='.$oldCount." NEW=".$newCount);
+          
+          if ($this->getConfiguration('notifmode') == "newfile" && $deltaCount > 0) {
+            // New file ADDED
+            filenotif::raisenotif(10);
+          } elseif ($this->getConfiguration('notifmode') == "delfile" && $deltaCount < 0) {
+            // File Deleted
+            filenotif::raisenotif(10);
           } else {
-            $this->checkAndUpdateCmd('info_filecount', $deltaCount);
-            $this->setConfiguration('FilesCount', $newCount);
-            $this->save();
-            $this->checkAndUpdateCmd('flag_newfile', 1);
-            sleep(10);
-            $this->checkAndUpdateCmd('flag_newfile', 0);
+            // BOTH DEL&NEW
+            filenotif::raisenotif(10);
           }
-      }else {
+      } else {
         log::add('filenotif', 'debug', '=> RAS');
       }
+    }
+
+    public function raisenotif($duration) {
+      $this->checkAndUpdateCmd('flag_newfile', 1);
+      sleep($duration);
+      $this->checkAndUpdateCmd('flag_newfile', 0);
     }
 
   /*
@@ -114,7 +102,7 @@ class filenotif extends eqLogic {
     					$c = new Cron\CronExpression(checkAndFixCron($autorefresh), new Cron\FieldFactory);
     					if ($c->isDue()) {
                 log::add('filenotif', 'debug', 'Execution du process de vérification pour : '.$filenotif->getHumanName());
-    						$filenotif->checkNewFile2();
+    						$filenotif->checkfile();
     					}
     				} catch (Exception $exc) {
     					log::add('filenotif', 'error', __('Expression cron non valide pour ', __FILE__) . $filenotif->getHumanName() . ' : ' . $autorefresh);
@@ -270,7 +258,7 @@ class filenotifCmd extends cmd {
   // Exécution d'une commande
      public function execute($_options = array()) {
        $eqLogic = $this->getEqlogic();
-       $eqLogic->checkNewFile2($result);
+       $eqLogic->checkfile($result);
      }
 
     /*     * **********************Getteur Setteur*************************** */
