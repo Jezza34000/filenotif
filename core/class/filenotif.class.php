@@ -61,32 +61,22 @@ class filenotif extends eqLogic {
         $listedfiles = glob($folder."*.{".$ext."}", GLOB_BRACE);
       }
       $newMD5 = md5(print_r($listedfiles, true));
-      log::add('filenotif', 'debug', 'Glob return : '.print_r($listedfiles, true));
-      $this->setConfiguration('Actual MD5=',$newMD5);
+      log::add('filenotif', 'debug', 'Glob retourne : '.print_r($listedfiles, true));
+      log::add('filenotif', 'debug', 'Nombres de fichiers : '.count($listedfiles));
+      $this->setConfiguration('FolderMD5',$newMD5);
       $this->save();
 
-
+      log::add('filenotif', 'debug', 'MD5(new)= '.$newMD5);
+      log::add('filenotif', 'debug', 'MD5(old)= '.$oldMD5);
       if ($oldMD5 != $newMD5) {
-        log::add('filenotif', 'debug', '=> New files detected');
+        log::add('filenotif', 'debug', '=> Changement détecté !');
         $this->checkAndUpdateCmd('flag_newfile', 1);
         sleep(10);
         $this->checkAndUpdateCmd('flag_newfile', 0);
       }else {
-        log::add('filenotif', 'debug', '=> No change');
+        log::add('filenotif', 'debug', '=> RAS');
       }
     }
-
-
-    /*function glob_recursive($pattern, $flags = 0){
-      $files = glob($pattern, $flags);
-
-      foreach (glob(dirname($pattern).'/*', GLOB_ONLYDIR|GLOB_NOSORT) as $dir){
-        $files = array_merge($files, glob_recursive($dir.'/'.basename($pattern), $flags));
-      }
-
-      return $files;
-    }*/
-
 
   /*
    * Permet de définir les possibilités de personnalisation du widget (en cas d'utilisation de la fonction 'toHtml' par exemple)
