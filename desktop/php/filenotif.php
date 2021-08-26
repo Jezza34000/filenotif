@@ -134,16 +134,16 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Extension}}
-									<sup><i class="fas fa-question-circle tooltips" title="{{Spécifiez les extensions à surveiller, séparer par des virgules, laissez vide pour tout prendre en compte}}"></i></sup>
+									<sup><i class="fas fa-question-circle tooltips" title="{{Spécifiez les extensions à surveiller, séparer par des virgules, ou, laissez vide pour tout prendre en compte}}"></i></sup>
 								</label>
 								<div class="col-sm-7">
 									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="extensiontocheck" placeholder="{{mp4,avi,mov,jpg,png,gif}}"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">{{Vérifier les sous-répertoire}}</label>
+								<label class="col-sm-3 control-label">{{Notifier les suppressions}}</label>
 								<div class="col-sm-3">
-									<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="checksubdirectory"/>
+									<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="notifydel"/>
 								</div>
 							</div>
 							<div class="form-group">

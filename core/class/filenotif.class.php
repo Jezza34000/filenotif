@@ -61,8 +61,9 @@ class filenotif extends eqLogic {
         $listedfiles = glob($folder."*.{".$ext."}", GLOB_BRACE);
       }
       $newMD5 = md5(print_r($listedfiles, true));
+      $newCount = count($listedfiles);
       log::add('filenotif', 'debug', 'Glob retourne : '.print_r($listedfiles, true));
-      log::add('filenotif', 'debug', 'Nombres de fichiers : '.count($listedfiles));
+      log::add('filenotif', 'debug', 'Nombres de fichiers : '.$newCount);
       $this->setConfiguration('FolderMD5',$newMD5);
       $this->save();
 
@@ -70,9 +71,21 @@ class filenotif extends eqLogic {
       log::add('filenotif', 'debug', 'MD5(old)= '.$oldMD5);
       if ($oldMD5 != $newMD5) {
         log::add('filenotif', 'debug', '=> Changement détecté !');
-        $this->checkAndUpdateCmd('flag_newfile', 1);
-        sleep(10);
-        $this->checkAndUpdateCmd('flag_newfile', 0);
+        $oldCount = $this->getConfiguration('FilesCount');
+        $deltaCount = $oldCount - $newCount;
+          if ($deltaCount > 0) {
+            $this->checkAndUpdateCmd('file_count', $deltaCount);
+            $this->setConfiguration('FilesCount', $newCount);
+            $this->checkAndUpdateCmd('flag_newfile', 1);
+            sleep(10);
+            $this->checkAndUpdateCmd('flag_newfile', 0);
+          } elseif ($deltaCount < 0 AND $this->getConfiguration('notifydel') == 1) {
+            $this->checkAndUpdateCmd('file_count', $deltaCount);
+            $this->setConfiguration('FilesCount', $newCount);
+            $this->checkAndUpdateCmd('flag_newfile', 1);
+            sleep(10);
+            $this->checkAndUpdateCmd('flag_newfile', 0);
+          }
       }else {
         log::add('filenotif', 'debug', '=> RAS');
       }
@@ -165,7 +178,7 @@ class filenotif extends eqLogic {
       $filenotifCmd->save();
 
       $filenotifCmd = new filenotifCmd();
-      $filenotifCmd->setName(__('Nouveau fichier détecté', __FILE__));
+      $filenotifCmd->setName(__('Changement détecté', __FILE__));
       $filenotifCmd->setEqLogic_id($this->id);
       $filenotifCmd->setType('info');
       $filenotifCmd->setSubType('binary');
@@ -175,12 +188,12 @@ class filenotif extends eqLogic {
       $filenotifCmd->save();
 
       $filenotifCmd = new filenotifCmd();
-      $filenotifCmd->setName(__('Quantité nouveau fichier', __FILE__));
+      $filenotifCmd->setName(__('Quantité fichier', __FILE__));
       $filenotifCmd->setEqLogic_id($this->id);
       $filenotifCmd->setType('info');
       $filenotifCmd->setSubType('numeric');
       $filenotifCmd->setIsHistorized(0);
-      $filenotifCmd->setLogicalId('file_quantity');
+      $filenotifCmd->setLogicalId('file_count');
       $filenotifCmd->setOrder(3);
       $filenotifCmd->save();
     }
