@@ -52,7 +52,7 @@ class filenotif extends eqLogic {
           //$listedfiles = rglob($folder . '/*');
           $files = glob($folder, '/*');
           foreach (glob(dirname($folder).'/*', GLOB_ONLYDIR|GLOB_NOSORT) as $dir) {
-              $listedfiles = array_merge($files, rglob($dir.'/'.basename($folder), $flags));
+              $listedfiles = array_merge($files, glob($dir.'/'.basename($folder), $flags));
           }
 
 
@@ -73,13 +73,13 @@ class filenotif extends eqLogic {
     }
 
 
-    public function rglob($pattern, $flags = 0) {
+    /*public function rglob($pattern, $flags = 0) {
         $files = glob($pattern, $flags);
         foreach (glob(dirname($pattern).'/*', GLOB_ONLYDIR|GLOB_NOSORT) as $dir) {
             $files = array_merge($files, rglob($dir.'/'.basename($pattern), $flags));
         }
         return $files;
-    }
+    }*/
 
 
   /*
