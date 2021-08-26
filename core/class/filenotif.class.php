@@ -73,7 +73,7 @@ class filenotif extends eqLogic {
         log::add('filenotif', 'debug', '=> Changement détecté !');
         $oldCount = $this->getConfiguration('FilesCount', 0);
         $deltaCount = $newCount - $oldCount;
-        log::add('filenotif', 'debug', 'Comptage OLD='.$oldCount." NEW=".$newCount);
+        log::add('filenotif', 'debug', 'Comptage Delta='.$deltaCount.' OLD='.$oldCount." NEW=".$newCount);
           if ($deltaCount < 0 AND $this->getConfiguration('notifydel') == 0) {
             // NO Notif
           } else {
