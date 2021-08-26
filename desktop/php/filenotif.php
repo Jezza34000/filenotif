@@ -183,9 +183,9 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								</div>
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="col-lg-6">
 							<label class="col-sm-3 control-label"> {{Nombre de fichier dans le répertoire :}}</label>
-							<div class="col-sm-7">
+							<div class="col-xs-11 col-sm-7">
 								<span class="eqLogicAttr" data-l1key="configuration" data-l2key="FilesCount"></span>
 							</div>
 						</div>
