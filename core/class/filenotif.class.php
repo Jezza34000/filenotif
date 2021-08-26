@@ -50,12 +50,7 @@ class filenotif extends eqLogic {
       if ($folder != '') {
           log::add('filenotif', 'debug', 'Lecture de : '.$folder);
           //$listedfiles = rglob($folder . '/*');
-          $files = glob($folder, '/*');
-          foreach (glob(dirname($folder).'/*', GLOB_ONLYDIR|GLOB_NOSORT) as $dir) {
-              $listedfiles = array_merge($files, glob($dir.'/'.basename($folder), $flags));
-          }
-
-
+          $listedfiles = glob($folder.'*');
           $newMD5 = md5(print_r($listedfiles, true));
           log::add('filenotif', 'debug', 'Glob return : '.print_r($listedfiles, true));
           $this->setConfiguration('FolderMD5',$newMD5);
@@ -73,12 +68,14 @@ class filenotif extends eqLogic {
     }
 
 
-    /*public function rglob($pattern, $flags = 0) {
-        $files = glob($pattern, $flags);
-        foreach (glob(dirname($pattern).'/*', GLOB_ONLYDIR|GLOB_NOSORT) as $dir) {
-            $files = array_merge($files, rglob($dir.'/'.basename($pattern), $flags));
-        }
-        return $files;
+    /*function glob_recursive($pattern, $flags = 0){
+      $files = glob($pattern, $flags);
+
+      foreach (glob(dirname($pattern).'/*', GLOB_ONLYDIR|GLOB_NOSORT) as $dir){
+        $files = array_merge($files, glob_recursive($dir.'/'.basename($pattern), $flags));
+      }
+
+      return $files;
     }*/
 
 
