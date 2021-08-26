@@ -65,7 +65,7 @@ class filenotif extends eqLogic {
 
       // Save folder structures
       $json = json_encode($listedfiles);
-      $file = fopen('test.json','w');
+      $file = fopen(__DIR__ . '/test.json','w');
       fwrite($file, $json);
       fclose($file);
 
