@@ -43,7 +43,7 @@ class filenotif extends eqLogic {
         $lstfolder[] = $folder;
       }
 
-      log::add('filenotif', 'debug', 'nombre de répertoire à lire : '.count($lstfolder););
+      log::add('filenotif', 'debug', 'nombre de répertoire à lire : '.count($lstfolder));
 
       foreach ($lstfolder as &$dir) {
         if ($ext == '*' OR $ext == NULL ) {
