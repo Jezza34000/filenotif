@@ -51,7 +51,7 @@ class filenotif extends eqLogic {
         if (substr($dir, -1) != "/") {
           $dir .= "/";
         }
-        
+
         if ($ext == '*' OR $ext == NULL ) {
           log::add('filenotif', 'debug', 'Lecture de : '.$dir. " En mode *");
           $newfilesfound = glob($dir.'*');
@@ -62,6 +62,12 @@ class filenotif extends eqLogic {
           $listedfiles = array_merge($listedfiles, $newfilesfound);
         }
       }
+
+      // Save folder structures
+      $json = json_encode($listedfiles);
+      $file = fopen('test.json','w');
+      fwrite($file, $json);
+      fclose($file);
 
       $newMD5 = md5(print_r($listedfiles, true));
       $newCount = count($listedfiles);
