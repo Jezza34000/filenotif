@@ -30,10 +30,6 @@ class filenotif extends eqLogic {
         return false;
       }
 
-      /*if (substr($folder, -1) != "/") {
-        $folder .= "/";
-      }*/
-
       $oldMD5 = $this->getConfiguration('FolderMD5');
       $ext = $this->getConfiguration('extensiontocheck');
       $subdir = $this->getConfiguration('checksubdir');
@@ -51,6 +47,11 @@ class filenotif extends eqLogic {
 
       $listedfiles = array();
       foreach ($lstfolder as $dir) {
+
+        if (substr($dir, -1) != "/") {
+          $dir .= "/";
+        }
+        
         if ($ext == '*' OR $ext == NULL ) {
           log::add('filenotif', 'debug', 'Lecture de : '.$dir. " En mode *");
           $newfilesfound = glob($dir.'*');
