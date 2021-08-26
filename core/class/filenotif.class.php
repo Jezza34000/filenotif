@@ -45,8 +45,8 @@ class filenotif extends eqLogic {
 
       log::add('filenotif', 'debug', 'Nombre de répertoire à lire : '.count($lstfolder));
 
+      $listedfiles = array();
       foreach ($lstfolder as $dir) {
-        log::add('filenotif', 'debug', 'Boucle '.$dir);
         if ($ext == '*' OR $ext == NULL ) {
           log::add('filenotif', 'debug', 'Lecture de : '.$dir. " En mode *");
           $newfilesfound = glob($dir.'*');
