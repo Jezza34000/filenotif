@@ -38,7 +38,10 @@ class filenotif extends eqLogic {
       $subdir = $this->getConfiguration('checksubdir');
 
       if ($subdir == 1) {
-
+        foreach (glob($folder . "/*", GLOB_ONLYDIR) as $newdirfound)
+          {
+              $lstfolder[] = $newdirfound;
+          }
       } else {
         $lstfolder[] = $folder;
       }
