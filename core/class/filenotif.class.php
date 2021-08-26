@@ -63,14 +63,10 @@ class filenotif extends eqLogic {
         }
       }
 
-      // Save folder structures
-      $json = json_encode($listedfiles);
-      $file = fopen(__DIR__ . '/test.json','w');
-      fwrite($file, $json);
-      fclose($file);
-
       $newMD5 = md5(print_r($listedfiles, true));
       $newCount = count($listedfiles);
+      $this->checkAndUpdateCmd('files_quantity', $newCount);
+
       log::add('filenotif', 'debug', 'Glob retourne : '.print_r($listedfiles, true));
       log::add('filenotif', 'debug', 'Nombres de fichiers : '.$newCount);
       $this->setConfiguration('FolderMD5',$newMD5);
@@ -79,6 +75,9 @@ class filenotif extends eqLogic {
       log::add('filenotif', 'debug', 'MD5(new)= '.$newMD5);
       log::add('filenotif', 'debug', 'MD5(old)= '.$oldMD5);
       if ($oldMD5 != $newMD5) {
+
+          $this->checkAndUpdateCmd('files_listing', json_encode($listedfiles));
+
           log::add('filenotif', 'debug', '=> Changement détecté !');
           $oldCount = $this->getConfiguration('FilesCount', 0);
           $deltaCount = $newCount - $oldCount;
@@ -208,13 +207,33 @@ class filenotif extends eqLogic {
       $filenotifCmd->save();
 
       $filenotifCmd = new filenotifCmd();
-      $filenotifCmd->setName(__('Quantité fichier', __FILE__));
+      $filenotifCmd->setName(__('Nombre de fichier ajouter ou supprimer', __FILE__));
       $filenotifCmd->setEqLogic_id($this->id);
       $filenotifCmd->setType('info');
       $filenotifCmd->setSubType('string');
       $filenotifCmd->setIsHistorized(0);
       $filenotifCmd->setLogicalId('info_filecount');
       $filenotifCmd->setOrder(3);
+      $filenotifCmd->save();
+
+      $filenotifCmd = new filenotifCmd();
+      $filenotifCmd->setName(__('Noms des fichiers', __FILE__));
+      $filenotifCmd->setEqLogic_id($this->id);
+      $filenotifCmd->setType('info');
+      $filenotifCmd->setSubType('string');
+      $filenotifCmd->setIsHistorized(0);
+      $filenotifCmd->setLogicalId('files_listing');
+      $filenotifCmd->setOrder(4);
+      $filenotifCmd->save();
+
+      $filenotifCmd = new filenotifCmd();
+      $filenotifCmd->setName(__('Quantités de fichier', __FILE__));
+      $filenotifCmd->setEqLogic_id($this->id);
+      $filenotifCmd->setType('info');
+      $filenotifCmd->setSubType('numeric');
+      $filenotifCmd->setIsHistorized(0);
+      $filenotifCmd->setLogicalId('files_quantity');
+      $filenotifCmd->setOrder(5);
       $filenotifCmd->save();
     }
 
