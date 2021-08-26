@@ -46,16 +46,25 @@ class filenotif extends eqLogic {
 
     public function checkNewFile2() {
       $folder = $this->getConfiguration('foldertocheck');
-      $oldMD5 = $this->getConfiguration('FolderMD5');
-      if ($folder != '') {
-          log::add('filenotif', 'debug', 'Lecture de : '.$folder);
-          //$listedfiles = rglob($folder . '/*');
-          $listedfiles = glob($folder.'*');
-          $newMD5 = md5(print_r($listedfiles, true));
-          log::add('filenotif', 'debug', 'Glob return : '.print_r($listedfiles, true));
-          $this->setConfiguration('FolderMD5',$newMD5);
-          $this->save();
+
+      if (substr($folder, -1) != "/") {
+        $folder. ="/"
       }
+      $oldMD5 = $this->getConfiguration('FolderMD5');
+      $ext = $this->getConfiguration('extensiontocheck', '*');
+
+      if ($ext == '*' OR $ext == NULL ) {
+        log::add('filenotif', 'debug', 'Lecture de : '.$folder. " En mode *");
+        $listedfiles = glob($folder.'*');
+      } else {
+        log::add('filenotif', 'debug', 'Lecture de : '.$folder. " En mode BRACE :".$ext);
+        $listedfiles = glob($folder."*.{".$ext."}", GLOB_BRACE);
+      }
+      $newMD5 = md5(print_r($listedfiles, true));
+      log::add('filenotif', 'debug', 'Glob return : '.print_r($listedfiles, true));
+      $this->setConfiguration('Actual MD5=',$newMD5);
+      $this->save();
+
 
       if ($oldMD5 != $newMD5) {
         log::add('filenotif', 'debug', '=> New files detected');
