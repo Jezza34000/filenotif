@@ -71,7 +71,7 @@ class filenotif extends eqLogic {
       log::add('filenotif', 'debug', 'MD5(old)= '.$oldMD5);
       if ($oldMD5 != $newMD5) {
         log::add('filenotif', 'debug', '=> Changement détecté !');
-        $oldCount = $this->getConfiguration('FilesCount', 0);
+        $oldCount = $this->getConfiguration('FilesCount');
         $deltaCount = $newCount - $oldCount;
         log::add('filenotif', 'debug', 'Comptage OLD='.$oldCount." NEW=".$newCount);
           if ($deltaCount > 0) {
