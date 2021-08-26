@@ -49,7 +49,13 @@ class filenotif extends eqLogic {
       $oldMD5 = $this->getConfiguration('FolderMD5');
       if ($folder != '') {
           log::add('filenotif', 'debug', 'Lecture de : '.$folder);
-          $listedfiles = rglob($folder . '/*');
+          //$listedfiles = rglob($folder . '/*');
+          $files = glob($folder, '/*');
+          foreach (glob(dirname($folder).'/*', GLOB_ONLYDIR|GLOB_NOSORT) as $dir) {
+              $listedfiles = array_merge($files, rglob($dir.'/'.basename($folder), $flags));
+          }
+
+
           $newMD5 = md5(print_r($listedfiles, true));
           log::add('filenotif', 'debug', 'Glob return : '.print_r($listedfiles, true));
           $this->setConfiguration('FolderMD5',$newMD5);
