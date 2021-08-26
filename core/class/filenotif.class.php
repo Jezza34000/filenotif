@@ -76,7 +76,7 @@ class filenotif extends eqLogic {
       log::add('filenotif', 'debug', 'MD5(old)= '.$oldMD5);
       if ($oldMD5 != $newMD5) {
 
-          $this->checkAndUpdateCmd('files_listing', json_encode($listedfiles));
+          //$this->checkAndUpdateCmd('files_listing', json_encode($listedfiles));
 
           log::add('filenotif', 'debug', '=> Changement détecté !');
           $oldCount = $this->getConfiguration('FilesCount', 0);
@@ -216,7 +216,7 @@ class filenotif extends eqLogic {
       $filenotifCmd->setOrder(3);
       $filenotifCmd->save();
 
-      $filenotifCmd = new filenotifCmd();
+      /*$filenotifCmd = new filenotifCmd();
       $filenotifCmd->setName(__('Noms des fichiers', __FILE__));
       $filenotifCmd->setEqLogic_id($this->id);
       $filenotifCmd->setType('info');
@@ -224,7 +224,7 @@ class filenotif extends eqLogic {
       $filenotifCmd->setIsHistorized(0);
       $filenotifCmd->setLogicalId('files_listing');
       $filenotifCmd->setOrder(4);
-      $filenotifCmd->save();
+      $filenotifCmd->save();*/
 
       $filenotifCmd = new filenotifCmd();
       $filenotifCmd->setName(__('Quantités de fichier', __FILE__));
