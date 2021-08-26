@@ -57,11 +57,10 @@ class filenotif extends eqLogic {
           log::add('filenotif', 'debug', 'Comptage | Delta='.$deltaCount.' OLD='.$oldCount." NEW=".$newCount);
           $notifmode = $this->getConfiguration('notifmode');
           log::add('filenotif', 'debug', 'Notif mode = '.$notifmode);
-          log::add('filenotif', 'debug', 'Notif mode = '.print_r($deltaCount < 0,true));
-          if ($notifmode == "newfile" && $deltaCount > 0) {
+          if ($notifmode == "newfile") && ($deltaCount > 0) {
             // New file ADDED
             filenotif::raisenotif(10);
-          } elseif ($notifmode == "delfile" && $deltaCount < 0) {
+          } elseif ($notifmode == "delfile") && ($deltaCount < 0) {
             // File Deleted
             filenotif::raisenotif(10);
           } else {
