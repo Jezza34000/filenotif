@@ -77,7 +77,7 @@ class filenotif extends eqLogic {
           if ($deltaCount < 0 AND $this->getConfiguration('notifydel') == 0) {
             // NO Notif
           } else {
-            $this->checkAndUpdateCmd('info_filecount', $deltaCount);
+            $this->checkAndUpdateCmd('info_filecount', (int)$deltaCount);
             $this->setConfiguration('FilesCount', $newCount);
             $this->save();
             $this->checkAndUpdateCmd('flag_newfile', 1);
