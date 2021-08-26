@@ -30,9 +30,10 @@ class filenotif extends eqLogic {
         return false;
       }
 
-      if (substr($folder, -1) != "/") {
+      /*if (substr($folder, -1) != "/") {
         $folder .= "/";
-      }
+      }*/
+
       $oldMD5 = $this->getConfiguration('FolderMD5');
       $ext = $this->getConfiguration('extensiontocheck');
       $subdir = $this->getConfiguration('checksubdir');
