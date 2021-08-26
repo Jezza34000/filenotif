@@ -71,16 +71,17 @@ class filenotif extends eqLogic {
       log::add('filenotif', 'debug', 'MD5(old)= '.$oldMD5);
       if ($oldMD5 != $newMD5) {
         log::add('filenotif', 'debug', '=> Changement détecté !');
-        $oldCount = $this->getConfiguration('FilesCount');
+        $oldCount = $this->getConfiguration('FilesCount', 0);
         $deltaCount = $oldCount - $newCount;
+        log::add('filenotif', 'debug', 'Nombres de modification :'.$deltaCount);
           if ($deltaCount > 0) {
-            $this->checkAndUpdateCmd('file_count', $deltaCount);
+            $this->checkAndUpdateCmd('info_filecount', $deltaCount);
             $this->setConfiguration('FilesCount', $newCount);
             $this->checkAndUpdateCmd('flag_newfile', 1);
             sleep(10);
             $this->checkAndUpdateCmd('flag_newfile', 0);
           } elseif ($deltaCount < 0 AND $this->getConfiguration('notifydel') == 1) {
-            $this->checkAndUpdateCmd('file_count', $deltaCount);
+            $this->checkAndUpdateCmd('info_filecount', $deltaCount);
             $this->setConfiguration('FilesCount', $newCount);
             $this->checkAndUpdateCmd('flag_newfile', 1);
             sleep(10);
@@ -193,7 +194,7 @@ class filenotif extends eqLogic {
       $filenotifCmd->setType('info');
       $filenotifCmd->setSubType('numeric');
       $filenotifCmd->setIsHistorized(0);
-      $filenotifCmd->setLogicalId('file_count');
+      $filenotifCmd->setLogicalId('info_filecount');
       $filenotifCmd->setOrder(3);
       $filenotifCmd->save();
     }
