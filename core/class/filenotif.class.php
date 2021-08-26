@@ -25,6 +25,11 @@ class filenotif extends eqLogic {
     public function checkfile() {
       $folder = $this->getConfiguration('foldertocheck');
 
+      if ($folder == "") {
+        log::add('filenotif', 'info', 'Configuration du répertoire à surveiller manquante');
+        return false;
+      }
+
       if (substr($folder, -1) != "/") {
         $folder .= "/";
       }
@@ -74,6 +79,7 @@ class filenotif extends eqLogic {
     }
 
     public function raisenotif($duration) {
+      log::add('filenotif', 'debug', '> Notification envoyé');
       $this->checkAndUpdateCmd('flag_newfile', 1);
       sleep($duration);
       $this->checkAndUpdateCmd('flag_newfile', 0);

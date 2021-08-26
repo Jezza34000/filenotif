@@ -133,6 +133,12 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								</div>
 							</div>
 							<div class="form-group">
+								<label class="col-sm-3 control-label">{{Inclure les sous-répertoires}}</label>
+								<div class="col-sm-3">
+									<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="checksubdir"/>
+								</div>
+							</div>
+							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Extension}}
 									<sup><i class="fas fa-question-circle tooltips" title="{{Spécifiez les extensions à surveiller, séparer par des virgules, ou, laissez vide pour tout prendre en compte}}"></i></sup>
 								</label>
@@ -175,6 +181,12 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								<div class="text-center">
 									<img name="icon_visu" src="<?= $plugin->getPathImgIcon(); ?>" style="max-width:160px;"/>
 								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label"> {{Nombre de fichier dans le répertoire :}}</label>
+							<div class="col-sm-7">
+								<span class="eqLogicAttr" data-l1key="configuration" data-l2key="FilesCount"></span>
 							</div>
 						</div>
 					</fieldset>
