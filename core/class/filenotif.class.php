@@ -35,14 +35,26 @@ class filenotif extends eqLogic {
       }
       $oldMD5 = $this->getConfiguration('FolderMD5');
       $ext = $this->getConfiguration('extensiontocheck');
+      $subdir = $this->getConfiguration('checksubdir');
 
-      if ($ext == '*' OR $ext == NULL ) {
-        log::add('filenotif', 'debug', 'Lecture de : '.$folder. " En mode *");
-        $listedfiles = glob($folder.'*');
+      if ($subdir == 1) {
+
       } else {
-        log::add('filenotif', 'debug', 'Lecture de : '.$folder. " En mode BRACE :".$ext);
-        $listedfiles = glob($folder."*.{".$ext."}", GLOB_BRACE);
+        $lstfolder[] = $folder;
       }
+
+      foreach ($lstfolder as &$dir) {
+        if ($ext == '*' OR $ext == NULL ) {
+          log::add('filenotif', 'debug', 'Lecture de : '.$dir. " En mode *");
+          $newfilesfound = glob($dir.'*');
+          $listedfiles = array_merge($listedfiles, $newfilesfound);
+        } else {
+          log::add('filenotif', 'debug', 'Lecture de : '.$dir. " En mode BRACE :".$ext);
+          $newfilesfound = glob($dir."*.{".$ext."}", GLOB_BRACE);
+          $listedfiles = array_merge($listedfiles, $newfilesfound);
+        }
+      }
+
       $newMD5 = md5(print_r($listedfiles, true));
       $newCount = count($listedfiles);
       log::add('filenotif', 'debug', 'Glob retourne : '.print_r($listedfiles, true));
