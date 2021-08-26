@@ -48,10 +48,10 @@ class filenotif extends eqLogic {
       $folder = $this->getConfiguration('foldertocheck');
 
       if (substr($folder, -1) != "/") {
-        $folder. ="/";
+        $folder .= "/";
       }
       $oldMD5 = $this->getConfiguration('FolderMD5');
-      $ext = $this->getConfiguration('extensiontocheck', '*');
+      $ext = $this->getConfiguration('extensiontocheck');
 
       if ($ext == '*' OR $ext == NULL ) {
         log::add('filenotif', 'debug', 'Lecture de : '.$folder. " En mode *");
