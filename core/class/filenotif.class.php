@@ -98,9 +98,9 @@ class filenotif extends eqLogic {
 
               $file = dirname(__FILE__) . '/../data/files.dat';
               if (file_put_contents($file, serialize($listedfiles))) {
-                log::add('filenotif', 'debug', 'Ecriture du fichier OK');
+                log::add('filenotif', 'debug', 'Ecriture du fichier OK '.$file);
               } else {
-                log::add('filenotif', 'debug', 'Ecriture du fichier NOK');
+                log::add('filenotif', 'debug', 'Ecriture du fichier NOK '.$file);
               }
               chmod($file, 0770);
           } catch (Exception $e) {
