@@ -76,9 +76,13 @@ class filenotif extends eqLogic {
       log::add('filenotif', 'debug', 'MD5(old)= '.$oldMD5);
       if ($oldMD5 != $newMD5) {
           // Save Folder/Files structures to file
-          $file = 'struct.txt';
-          file_put_contents($file, json_encode($listedfiles));
-          chmod($file, 0770);
+          try {
+              $file = 'struct.txt';
+              file_put_contents($file, print_r($listedfiles, TRUE));
+              chmod($file, 0770);
+          } catch (Exception $e) {
+              log::add('filenotif', 'debug', 'Erreur ecriture du fichier : '.$e->getMessage());
+          }
 
           log::add('filenotif', 'debug', '=> Changement détecté !');
           $oldCount = $this->getConfiguration('FilesCount', 0);
