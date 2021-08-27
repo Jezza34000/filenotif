@@ -93,8 +93,11 @@ class filenotif extends eqLogic {
         //End result.
         var_dump($arrayUnserialized);*/
 
-        $path = realpath(dirname(__FILE__).'/../');
-
+        $path = realpath(dirname(__FILE__).'/../data');
+        if (!file_exists($path)) {
+           mkdir(realpath(dirname(__FILE__).'/../').'data', 0777);
+           $path = realpath(dirname(__FILE__).'/../data');
+        }
         log::add('filenotif', 'debug', 'Chemin de la sauvegarde : '.$path);
 
           // Save Folder/Files structures to file
