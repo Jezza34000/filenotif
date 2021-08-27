@@ -97,10 +97,10 @@ class filenotif extends eqLogic {
           try {
 
               $file = 'struct.txt';
-              if(file_put_contents($file, serialize($listedfiles)) {
-                  log::add('filenotif', 'debug', 'Ecriture du fichier NOK ');
+              if (file_put_contents($file, serialize($listedfiles))) {
+                log::add('filenotif', 'debug', 'Ecriture du fichier OK');
               } else {
-                  log::add('filenotif', 'debug', 'Ecriture du fichier OK ');
+                log::add('filenotif', 'debug', 'Ecriture du fichier NOK');
               }
               chmod($file, 0770);
           } catch (Exception $e) {
