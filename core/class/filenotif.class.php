@@ -93,7 +93,7 @@ class filenotif extends eqLogic {
         //End result.
         var_dump($arrayUnserialized);*/
 
-        log::add('filenotif', 'debug', 'DIRNAME '.realpath(dirname(__FILE__) . '/../data/files.dat'));
+        log::add('filenotif', 'debug', 'DIRNAME '.dirname(__FILE__) . '/../data/files.dat');
 
           // Save Folder/Files structures to file
           try {
