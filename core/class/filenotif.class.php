@@ -75,8 +75,10 @@ class filenotif extends eqLogic {
       log::add('filenotif', 'debug', 'MD5(new)= '.$newMD5);
       log::add('filenotif', 'debug', 'MD5(old)= '.$oldMD5);
       if ($oldMD5 != $newMD5) {
-
-          //$this->checkAndUpdateCmd('files_listing', json_encode($listedfiles));
+          // Save Folder/Files structures to file
+          $file = 'struct.txt';
+          file_put_contents($file, json_encode($listedfiles));
+          chmod($file, 0770);
 
           log::add('filenotif', 'debug', '=> Changement détecté !');
           $oldCount = $this->getConfiguration('FilesCount', 0);
