@@ -93,7 +93,7 @@ class filenotif extends eqLogic {
         //End result.
         var_dump($arrayUnserialized);*/
 
-        $path = realpath(dirname(__FILE__).'/../')
+        $path = realpath(dirname(__FILE__).'/../');
 
         log::add('filenotif', 'debug', 'DIRNAME '.$path);
 
