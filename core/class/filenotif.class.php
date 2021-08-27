@@ -75,13 +75,32 @@ class filenotif extends eqLogic {
       log::add('filenotif', 'debug', 'MD5(new)= '.$newMD5);
       log::add('filenotif', 'debug', 'MD5(old)= '.$oldMD5);
       if ($oldMD5 != $newMD5) {
+        /*Example array.
+        $array = array('Ireland', 'England', 'Wales', 'Northern Ireland', 'Scotland');
+
+        //Serialize the array.
+        $serialized = serialize($array);
+
+        //Save the serialized array to a text file.
+        file_put_contents('serialized.txt', $serialized);
+
+        //Retrieve the serialized string.
+        $fileContents = file_get_contents('serialized.txt');
+
+        //Unserialize the string back into an array.
+        $arrayUnserialized = unserialize($fileContents);
+
+        //End result.
+        var_dump($arrayUnserialized);*/
+
           // Save Folder/Files structures to file
           try {
+              log::add('filenotif', 'debug', 'Ecriture du fichier');
               $file = 'struct.txt';
-              file_put_contents($file, print_r($listedfiles, TRUE));
+              file_put_contents($file, serialize($listedfiles));
               chmod($file, 0770);
           } catch (Exception $e) {
-              log::add('filenotif', 'debug', 'Erreur ecriture du fichier : '.$e->getMessage());
+              log::add('filenotif', 'debug', 'Erreur : '.$e->getMessage());
           }
 
           log::add('filenotif', 'debug', '=> Changement détecté !');
