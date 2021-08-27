@@ -96,7 +96,7 @@ class filenotif extends eqLogic {
           // Save Folder/Files structures to file
           try {
 
-              $file = 'struct.txt';
+              $file = dirname(__FILE__) . '/../data/files.dat'
               if (file_put_contents($file, serialize($listedfiles))) {
                 log::add('filenotif', 'debug', 'Ecriture du fichier OK');
               } else {
